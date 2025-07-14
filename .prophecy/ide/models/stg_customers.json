@@ -1,0 +1,137 @@
+{
+  "id" : "stg_customers",
+  "metainfo" : {
+    "label" : "stg_customers",
+    "autoLayout" : false,
+    "staleState" : "none",
+    "sourceSuggestions" : {
+      "sources" : [ ]
+    },
+    "graphConfig" : {
+      "userDefinedConfig" : {
+        "vars" : { }
+      }
+    },
+    "version" : 3
+  },
+  "processes" : {
+    "source##G9KaoPiw" : {
+      "id" : "source##G9KaoPiw",
+      "component" : "Seed",
+      "metadata" : {
+        "label" : "source",
+        "x" : 20,
+        "y" : 20,
+        "phase" : 0,
+        "comment" : "-\n    Normally we would select from the table here, but we are using seeds to load\n    our data in this project\n    ",
+        "isLabelGrayed" : false
+      },
+      "properties" : {
+        "table" : {
+          "name" : "raw_customers",
+          "sourceType" : "Seed"
+        }
+      },
+      "ports" : {
+        "inputs" : [ ],
+        "outputs" : [ {
+          "id" : "lb6PQbkQ",
+          "slug" : "out"
+        } ],
+        "isCustomOutputSchema" : false,
+        "autoUpdateOnRun" : false
+      },
+      "index" : 0
+    },
+    "renamed##v2Wz9BwC" : {
+      "id" : "renamed##v2Wz9BwC",
+      "component" : "Reformat",
+      "metadata" : {
+        "label" : "renamed",
+        "x" : 220,
+        "y" : 20,
+        "phase" : 0,
+        "macroDependencies" : [ ],
+        "isLabelGrayed" : false
+      },
+      "properties" : {
+        "columnsSelector" : [ ],
+        "expressions" : [ {
+          "expression" : {
+            "expression" : "id"
+          },
+          "alias" : "customer_id"
+        }, {
+          "expression" : {
+            "expression" : "first_name"
+          }
+        }, {
+          "expression" : {
+            "expression" : "last_name"
+          }
+        } ]
+      },
+      "ports" : {
+        "inputs" : [ {
+          "id" : "OIqjAUPs",
+          "slug" : "source"
+        } ],
+        "outputs" : [ {
+          "id" : "YYlxHGTl",
+          "slug" : "out"
+        } ],
+        "isCustomOutputSchema" : false,
+        "autoUpdateOnRun" : false
+      },
+      "index" : 1
+    },
+    "final##MTmcQtdp" : {
+      "id" : "final##MTmcQtdp",
+      "component" : "TargetModel",
+      "metadata" : {
+        "label" : "stg_customers",
+        "x" : 420,
+        "y" : 20,
+        "phase" : 0,
+        "isLabelGrayed" : false
+      },
+      "properties" : {
+        "customQueryDisabled" : true,
+        "customQuery" : false,
+        "incrementalEditorDisabled" : true,
+        "query" : "SELECT *\n\nFROM renamed\n",
+        "incrementalKey" : false,
+        "incremental" : {
+          "expression" : "true"
+        }
+      },
+      "ports" : {
+        "inputs" : [ {
+          "id" : "U6gQVZTu",
+          "slug" : "renamed"
+        } ],
+        "outputs" : [ {
+          "id" : "iEA8ENLP",
+          "slug" : "out"
+        } ],
+        "isCustomOutputSchema" : false,
+        "autoUpdateOnRun" : false
+      },
+      "index" : 2
+    }
+  },
+  "connections" : [ {
+    "id" : "qrV00cNa",
+    "source" : "source##G9KaoPiw",
+    "sourcePort" : "lb6PQbkQ",
+    "target" : "renamed##v2Wz9BwC",
+    "targetPort" : "OIqjAUPs"
+  }, {
+    "id" : "ADo0ta7a",
+    "source" : "renamed##v2Wz9BwC",
+    "sourcePort" : "YYlxHGTl",
+    "target" : "final##MTmcQtdp",
+    "targetPort" : "U6gQVZTu"
+  } ],
+  "component" : "Model"
+}
