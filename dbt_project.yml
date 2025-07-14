@@ -30,6 +30,17 @@ macro-paths:
 target-path: "target"
 
 # ==================
+# Variable Configs
+# ==================
+vars:
+  config-1: "config1"
+  config-2: "config2"
+  config-3: "config3"
+  num1: "1"
+  num2: "2"
+  num3: "3"
+
+# ==================
 # Model Configs
 # ==================
 models:
